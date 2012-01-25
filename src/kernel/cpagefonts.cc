@@ -46,6 +46,9 @@ using namespace utils;
 // Static initialization
 const char* CPageFonts::PDFEDIT_FONTID = "PDFEDIT_F";
 
+// =====================================================================================
+namespace {
+// =====================================================================================
 
 	/** 
 	 * Looks for a font with the given name.
@@ -61,6 +64,10 @@ const char* CPageFonts::PDFEDIT_FONTID = "PDFEDIT_F";
 				return i;
 		return containter.end();
 	}
+
+// =====================================================================================
+} // namespace 
+// =====================================================================================
 
 
 //
