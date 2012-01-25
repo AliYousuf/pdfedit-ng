@@ -37,7 +37,8 @@
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <PropertyGroup>
-    <PreBuildEvent>xcopy /I /Y $(SolutionDir)\..\src\guiqt4\images $(SolutionDir)\output\images
+    <PreBuildEvent>xcopy /I /Y $(SolutionDir)\..\src\gui\images $(SolutionDir)\output\images
+
 echo "Please, set QTDIR if not successful."</PreBuildEvent>
   </PropertyGroup>
   <!--
