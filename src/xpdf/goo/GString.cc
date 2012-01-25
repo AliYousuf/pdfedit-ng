@@ -231,7 +231,7 @@ GString *GString::appendfv(char *fmt, va_list argList) {
   GStringFormatType ft;
   char buf[65] = {};
   int len=0, i=0;
-  char *p0 = NULL, *p1 = NULL, *str = NULL;
+  char *p0, *p1, *str = NULL;
 
   argsLen = 0;
   argsSize = 8;
