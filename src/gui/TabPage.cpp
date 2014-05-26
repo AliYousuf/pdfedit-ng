@@ -1658,11 +1658,12 @@ void TabPage::highlightText() //tu mame convertle  x,y, co sa tyka ser space
 	
 	Ops ops;
 	_page->getObjectsAtPosition(ops, lRect);
-	bool found;
+	bool found = false;
 	StateUpdater::CheckTypes c;
 
-	sTextIt = _textList.begin();
-	int i = 0;
+	sTextItEnd = sTextIt = _textList.begin();
+
+    int i = 0;
 	if (ops.empty())
 	{
 		_selected = false;
@@ -1679,6 +1680,7 @@ void TabPage::highlightText() //tu mame convertle  x,y, co sa tyka ser space
 			continue;
 		setTextData(sTextIt,_textList.end(), ops[i]);
 		sTextMarker = sTextItEnd = sTextIt;
+        found = true;
 		break;
 	}
 	for(i; i<ops.size();i++)
@@ -1698,11 +1700,18 @@ void TabPage::highlightText() //tu mame convertle  x,y, co sa tyka ser space
 		if (*sTextItEnd < op)
 			setTextData(sTextItEnd,_textList.end(),ops[i]);
 	}
-	for (TextData::iterator iter = sTextIt; iter!= sTextItEnd; iter++)
-	{
+        // e.g., no operator was a text one
+        if ( !found ) 
+        {
+            _selected = false;
+            clearSelected();
+            return;
+        }
+    for (TextData::iterator iter = sTextIt; iter!= sTextItEnd; iter++)
+    {
 		iter->clear();
 	}
-	sTextItEnd->clear();
+    sTextItEnd->clear();
 	
 	double xxPoint = r.left() , yyPoint =r.top();
 	double xxOrig = r.right() , yyOrig= r.bottom();
