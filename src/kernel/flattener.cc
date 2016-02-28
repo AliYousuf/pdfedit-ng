@@ -45,7 +45,7 @@ boost::shared_ptr<Flattener> Flattener::getInstance(const char * fileName, IPdfW
 	boost::shared_ptr<FileStreamData> streamData;
 	try
 	{
-		streamData = boost::shared_ptr<FileStreamData>(PdfDocumentWriter::getStreamData(fileName));
+        	streamData = boost::shared_ptr<FileStreamData>(PdfDocumentWriter::getStreamData(fileName));
 		if (!streamData)
 			return boost::shared_ptr<Flattener>();
 		instance=new Flattener(*streamData, pdfWriter);
@@ -83,7 +83,7 @@ bool containsRef(const Flattener::RefList & refList, const ::Ref& ref)
 }
 
 // fwd declaration
-void collectReachableRefs(::XRef& xref, const ::Object &obj, Flattener::RefList &refList);
+void collectReachableRefs(::XRef& xref, ::Object &obj, Flattener::RefList &refList);
 
 /** Helper function to find all references from given dictionary.
  * @param xref XRef table.
@@ -182,7 +182,7 @@ void Flattener::initReachableObjects()
 	// traverses all objects reachable from trailer and put their references
 	// to the reachAbleRefs - this should provide complete list of all objects
 	// required for document
-	const Object *trailer = getTrailerDict();
+    	Object *trailer = getTrailerDict();
 	collectReachableRefs(*this, *trailer, reachAbleRefs);
 	utilsPrintDbg(debug::DBG_INFO, reachAbleRefs.size()<<" indirect objects collected");
 	lastIndex=0;

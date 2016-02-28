@@ -43,7 +43,7 @@
  * Declares base interface for all writers to Base stream. All real writers
  * should implement this abstract class and stream type which is written.
  */
-class StreamWriter: virtual public BaseStream
+class StreamWriter: public BaseStream
 {
 public:
 	/** Constructor with dictionary object.

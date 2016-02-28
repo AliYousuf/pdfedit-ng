@@ -29,6 +29,7 @@
 #include "kernel/streamwriter.h"
 #include "kernel/factories.h"
 #include <poppler/Hints.h>
+#include <poppler/Stream.h>
 #include <zlib.h>
 
 /** Size of buffer for xref table row.
@@ -481,13 +482,13 @@ void IPdfWriter::writeHeader(const char* version, StreamWriter &stream)
 	buffer[3]=(char )253;
 	buffer[4]=(char )254;
 	buffer[5]='\0';
-	stream.putLine(buffer, strlen(buffer));
+    	stream.getLine(const_cast<char*>(buffer), strlen(buffer));
 }
 
 const std::string OldStylePdfWriter::CONTENT = "Content phase"; 
 const std::string OldStylePdfWriter::TRAILER = "XREF/TRAILER phase";
 
-void OldStylePdfWriter::writeContent(const ObjectList & objectList, StreamWriter & stream, size_t off)
+void OldStylePdfWriter::writeContent(ObjectList &objectList,BaseStream & stream, size_t off)
 {
 using namespace debug;
 using namespace boost;
@@ -907,8 +908,8 @@ using namespace debug;
 	
 	// creates outputStream writer from given file
 	Object dict;
-	boost::shared_ptr<StreamWriter> outputStream(
-			new FileStreamWriter(file, 0, false, 0, &dict));
+    	boost::shared_ptr<BaseStream> outputStream(
+            new FileStream((GooFile*)file, 0, gFalse, 0, &dict));
 
 	// Writes header with the same PDF version
 	pdfWriter->writeHeader(getPDFVersion(), *outputStream);
@@ -919,7 +920,7 @@ using namespace debug;
 		// writes collected objects and xref & trailer section
 		utilsPrintDbg(DBG_INFO, "Writing "<<objectList.size()
 				<<" objects to the output outputStream.");
-		pdfWriter->writeContent(objectList, *outputStream);
+        	pdfWriter->writeContent(objectList, *outputStream);
 		// clean up
 		utilsPrintDbg(DBG_DBG, "Cleaning up all writen objects("
 				<<objectList.size()<<").");
@@ -934,7 +935,8 @@ using namespace debug;
 	// no previous section information and all objects are going to be written
 	IPdfWriter::PrevSecInfo prevInfo={0, 0};
 	pdfWriter->writeTrailer(*getTrailerDict(), prevInfo, *outputStream);
-	outputStream->flush();
+////	outputStream->flush();
+//    fflush(f);
 
 	return 0;
 }

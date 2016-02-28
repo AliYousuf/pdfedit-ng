@@ -28,6 +28,7 @@
 
 #include "kernel/static.h"
 #include "kernel/cxref.h"
+#include <poppler/Stream.h>
 
 /** Header of pdf file.
  * This string should be appended by pdf version number.
@@ -465,7 +466,7 @@ public:
 	 * <br>
 	 * Doesn't write xref and trailer.
 	 */
-	virtual void writeContent(const ObjectList & objectList, StreamWriter & stream, size_t off=0) =0;
+    	void writeContent(ObjectList & objectList, BaseStream & stream, size_t off=0);
 
 	/** Writes xref and trailer section.
 	 * @param trailer Trailer object.xrefPos.
@@ -568,7 +569,7 @@ public:
 	 * contains total number of objects which should be written by this call.
 	 * Context task field contains CONTENT string.
 	 */
-	virtual void writeContent(const ObjectList & objectList, StreamWriter & stream, size_t off=0);
+     	void writeContent(ObjectList & objectList, BaseStream & stream, size_t off=0);
 
 	/** Writes cross reference table and trailer.
 	 * @param trailer Trailer object.
@@ -638,7 +639,7 @@ struct FileStreamData
 	/** Stream writer.
 	 * Provides interface to write data to the stream.
 	 */
-	StreamWriter *stream;
+    	BaseStream *stream;
 
 	/** File handle.
 	 *
@@ -647,7 +648,7 @@ struct FileStreamData
 	 * file handle from outside and also doesn't provide proper
 	 * close functionality.
 	 */
-	FILE *file;
+    	FILE *file;
 };
 
 /** Helper class to deallocate a type which holds FileStreamData and
@@ -785,7 +786,7 @@ public:
 	 * @return StreamData which contains opened stream and file handle or
 	 * NULL if not able to open file for reading.
 	 */
-	static FileStreamData* getStreamData(const char * fileName);
+    	static FileStreamData* getStreamData(const char * fileName);
 
 	/** Destructor.
 	 *

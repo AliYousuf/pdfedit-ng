@@ -33,6 +33,7 @@
 #include "kernel/cpageattributes.h"
 #include "kernel/pdfedit-core-dev.h"
 #include "kernel/streamwriter.h"
+#include <poppler/Stream.h>
 
 using namespace boost;
 using namespace std;
@@ -1658,7 +1659,7 @@ void CPdf::initRevisionSpecific()
 		registerPageTreeObservers(pageTreeRoot);
 }
 
-CPdf::CPdf(StreamWriter * stream, OpenMode openMode)
+CPdf::CPdf(BaseStream * stream, OpenMode openMode)
 	:pageTreeRootObserver(new PageTreeRootObserver(this)),
 	 pageTreeNodeObserver(new PageTreeNodeObserver(this)),
 	 pageTreeKidsObserver(new PageTreeKidsObserver(this)),

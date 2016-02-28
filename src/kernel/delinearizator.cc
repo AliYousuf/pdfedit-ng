@@ -31,6 +31,7 @@
 #include "kernel/streamwriter.h"
 #include "kernel/factories.h"
 #include "kernel/pdfedit-core-dev.h"
+#include <poppler/Stream.h>
 
 
 namespace pdfobjects {
@@ -51,7 +52,7 @@ boost::shared_ptr<Delinearizator> Delinearizator::getInstance(
  	boost::shared_ptr<FileStreamData> streamData;
 	try
 	{
-		streamData = boost::shared_ptr<FileStreamData>(PdfDocumentWriter::getStreamData(fileName));
+        streamData = boost::shared_ptr<FileStreamData>(PdfDocumentWriter::getStreamData(fileName));
 		if (!streamData)
 			return boost::shared_ptr<Delinearizator>();
 		instance=new Delinearizator(*streamData, pdfWriter);

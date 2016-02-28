@@ -56,7 +56,7 @@ namespace {
 
 	// "m"
 	GfxState *
-	opmUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opmUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (2 <= args.size());
 		// Set edge of rectangle from actual position on output devices
@@ -71,7 +71,7 @@ namespace {
 	}
 	// "Td"
 	GfxState *
-	opTdUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opTdUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (2 <= args.size());
 		// Set edge of rectangle from actual position on output devices
@@ -88,7 +88,7 @@ namespace {
 	}
 	// "Tm"
 	GfxState *
-	opTmUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    opTmUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (6 <= args.size ());
 		// Set edge of rectangle from actual position on output devices
@@ -111,7 +111,7 @@ namespace {
 	}
 	// "BT"
 	GfxState *
-	opBTUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands&, BBox* rc)
+    	opBTUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands&, BBox* rc)
 	{
 		// Set edge of rectangle from actual position on output devices
 		state->transform(state->getCurX (), state->getCurY(), & rc->xleft, & rc->yleft);
@@ -127,7 +127,7 @@ namespace {
 	}
 	// "Do"
 	GfxState *
-	opDoUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands&, BBox* rc)
+    	opDoUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands&, BBox* rc)
 	{
 		// Set edge of rectangle from actual position on output devices
 		state->transform(0, 0, & rc->xleft, & rc->yleft);
@@ -140,7 +140,7 @@ namespace {
 	}
 	// "l"
 	GfxState *
-	oplUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	oplUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (2 <= args.size ());
 		// Set edge of rectangle from actual position on output devices
@@ -156,7 +156,7 @@ namespace {
 	}
 	// "c"
 	GfxState *
-	opcUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opcUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (6 <= args.size ());
 		// Set edge of rectangle from actual position on output devices
@@ -189,7 +189,7 @@ namespace {
 	}
 	// "v"
 	GfxState *
-	opvUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opvUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (4 <= args.size ());
 		// Set edge of rectangle from actual position on output devices
@@ -225,7 +225,7 @@ namespace {
 	}
 	// "y"
 	GfxState *
-	opyUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opyUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (4 <= args.size ());
 		// Set edge of rectangle from actual position on output devices
@@ -262,7 +262,7 @@ namespace {
 	}
 	// "re"
 	GfxState *
-	opreUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opreUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (4 <= args.size ());
 		double x = getDoubleFromIProperty(args[0]);
@@ -295,7 +295,7 @@ namespace {
 	}
 	// "h"
 	GfxState *
-	ophUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands&, BBox* rc)
+    	ophUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands&, BBox* rc)
 	{
 		// Set edge of rectangle from actual position on output devices
 		state->transform(state->getCurX (), state->getCurY(), & rc->xleft, & rc->yleft);
@@ -310,7 +310,7 @@ namespace {
 	}
 	// "Tc"
 	GfxState *
-	opTcUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opTcUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (1 <= args.size());
 		// Set edge of rectangle from actual position on output devices
@@ -350,7 +350,7 @@ namespace {
 	}
 	// "Ts"
 	GfxState *
-	opTsUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opTsUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (1 <= args.size());
 		// Set edge of rectangle from actual position on output devices
@@ -366,7 +366,7 @@ namespace {
 	}
 	// "Tw"
 	GfxState *
-	opTwUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opTwUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (1 <= args.size());
 		// Set edge of rectangle from actual position on output devices
@@ -382,7 +382,7 @@ namespace {
 	}
 	// "Tz"
 	GfxState *
-	opTzUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opTzUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (1 <= args.size());
 		// Set edge of rectangle from actual position on output devices
@@ -398,7 +398,7 @@ namespace {
 	}
 	// "TD"
 	GfxState *
-	opTDUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opTDUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (2 <= args.size ());
 		// Set edge of rectangle from actual position on output devices
@@ -418,7 +418,7 @@ namespace {
 	}
 	// "T*"
 	GfxState *
-	opTstarUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands&, BBox* rc)
+    	opTstarUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands&, BBox* rc)
 	{
 		// Set edge of rectangle from actual position on output devices
 		state->transform(state->getCurX (), state->getCurY(), & rc->xleft, & rc->yleft);
@@ -435,7 +435,7 @@ namespace {
 	}
 	// "Tj"
 	GfxState *
-	opTjUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator> op, const PdfOperator::Operands& args, BBox* rc)
+    	opTjUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator> op, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (1 <= args.size ());
 
@@ -455,7 +455,7 @@ namespace {
 	}
 	// "'"
 	GfxState *
-	opApoUpdate (GfxState* state, boost::shared_ptr<GfxResources> res, const boost::shared_ptr<PdfOperator> op, const PdfOperator::Operands& args, BBox* rc)
+    	opApoUpdate (GfxState* state, boost::shared_ptr<GfxResources> res, const boost::shared_ptr<PdfOperator> op, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (1 <= args.size ());
 
@@ -473,7 +473,7 @@ namespace {
 	}
 	// "TL"
 	GfxState *
-	opTLUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opTLUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (1 <= args.size ());
 		// Set edge of rectangle from actual position on output devices
@@ -489,7 +489,7 @@ namespace {
 	}
 	// "\"
 	GfxState *
-	opSlashUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator> op, const PdfOperator::Operands& args, BBox* rc)
+    	opSlashUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator> op, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (3 <= args.size ());
 		
@@ -523,7 +523,7 @@ namespace {
 	}
 	// "TJ"
 	GfxState *
-	opTJUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator> op, const PdfOperator::Operands& args, BBox* rc)
+    	opTJUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator> op, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (1 <= args.size ());
 
@@ -594,7 +594,7 @@ namespace {
 	}
 	// "cm"
 	GfxState *
-	opcmUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opcmUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (6 <= args.size());
 		// Set edge of rectangle from actual position on output devices
@@ -617,7 +617,7 @@ namespace {
 
 	// "Q"
 	GfxState *
-	opQUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands&, BBox* rc)
+    	opQUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands&, BBox* rc)
 	{
 		// Set edge of rectangle from actual position on output devices
 		state->transform(state->getCurX (), state->getCurY(), & rc->xleft, & rc->yleft);
@@ -633,7 +633,7 @@ namespace {
 
 	// "q"
 	GfxState *
-	opqUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands&, BBox* rc)
+    	opqUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands&, BBox* rc)
 	{
 		// Set edge of rectangle from actual position on output devices
 		state->transform(state->getCurX (), state->getCurY(), & rc->xleft, & rc->yleft);
@@ -649,7 +649,7 @@ namespace {
 
 	// "Tr"
 	GfxState *
-	opTrUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opTrUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		assert (1 <= args.size());
 		// Set edge of rectangle from actual position on output devices
@@ -666,7 +666,7 @@ namespace {
 
 	// "w"
 	GfxState *
-	opwUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
+    	opwUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator>, const PdfOperator::Operands& args, BBox* rc)
 	{
 		// Set edge of rectangle from actual position on output devices
 		state->transform(state->getCurX (), state->getCurY(), & rc->xleft, & rc->yleft);
@@ -681,7 +681,7 @@ namespace {
 	
 	// "BI"
 	GfxState *
-	opBIUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator> op, const PdfOperator::Operands&, BBox* rc)
+    	opBIUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator> op, const PdfOperator::Operands&, BBox* rc)
 	{
 		// Set edge of rectangle from actual position on output devices
 		state->transform(state->getCurX (), state->getCurY(), & rc->xleft, & rc->yleft);
@@ -707,7 +707,7 @@ namespace {
 
 	// "ID"
 	GfxState *
-	opIDUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator> op, const PdfOperator::Operands&, BBox* rc)
+    	opIDUpdate (GfxState* state, boost::shared_ptr<GfxResources>, const boost::shared_ptr<PdfOperator> op, const PdfOperator::Operands&, BBox* rc)
 	{
 		// Set edge of rectangle from actual position on output devices
 		state->transform(state->getCurX (), state->getCurY(), & rc->xleft, & rc->yleft);
@@ -968,167 +968,167 @@ StateUpdater::printTextUpdate (GfxState* state, const std::string& txt, BBox* rc
 //
 //
 StateUpdater::CheckTypes StateUpdater::KNOWN_OPERATORS[] = {
-	{"\\",    3, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pString)}, 
-			opSlashUpdate, "" },	
-	{"'",   1, {setNthBitsShort (pString)}, 
-			opApoUpdate, "" },	
-	{"B",   0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"B*",  0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"BDC", 2, {setNthBitsShort (pName), setNthBitsShort (pDict, pName)}, 
-			unknownUpdate, "" },	
-	{"BI",  -1, {setNoneBitsShort ()}, 
-			opBIUpdate, "EI" },	
-	{"BMC", 1, {setNthBitsShort (pName)}, 
-			unknownUpdate, "" },	
-	{"BT",  0, {setNoneBitsShort ()}, 
-			opBTUpdate, "ET" },	
-	{"BX",  0, {setNoneBitsShort ()}, 
-			unknownUpdate, "EX" },	
-	{"CS",  1, {setNthBitsShort (pName)}, 
-			unknownUpdate, "" },	
-	{"DP",  2,	{setNthBitsShort (pName), setNthBitsShort (pDict, pName)}, 
-			unknownUpdate, "" },	
-	{"Do",  1, {setNthBitsShort (pName)}, 
-			opDoUpdate, "" },	
-	{"EI",  -10, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"EMC", 0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"ET",  0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"EX",  0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"F",   0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"G",   1, {setNthBitsShort (pInt, pReal)}, 
-			unknownUpdate, "" },	
-	{"ID",  0, {setNoneBitsShort ()},
-			opIDUpdate, "" },	
-	{"J",   1, {setNthBitsShort (pInt)}, 
-			unknownUpdate, "" },	
-	{"K",   4, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),
-				setNthBitsShort (pInt, pReal),	setNthBitsShort (pInt, pReal)}, 
-			unknownUpdate, "" },	
-	{"M",   1, {setNthBitsShort (pInt, pReal)}, 
-			unknownUpdate, "" },	
-	{"MP",  1, {setNthBitsShort (pName)}, 
-			unknownUpdate, "" },	
-	{"Q",   0, {setNoneBitsShort ()}, 
-			opQUpdate, "" },	
-	{"RG",  3, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)}, 
-			unknownUpdate, "" },	
-	{"S",   0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"SC",  -4, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),    
-				setNthBitsShort (pInt, pReal),	setNthBitsShort (pInt, pReal)}, 
-			unknownUpdate, "" },	
-	{"SCN", -5,  {setNthBitsShort (pInt, pReal, pName), setNthBitsShort (pInt, pReal, pName), 
-				 setNthBitsShort (pInt, pReal, pName), setNthBitsShort (pInt, pReal, pName), 
-				 setNthBitsShort (pInt, pReal, pName)}, 
-			unknownUpdate, "" },	
-	{"T*",  0, {setNoneBitsShort ()}, 
-			opTstarUpdate, "" },	
-	{"TD",  2, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)}, 
-			opTDUpdate, "" },	
-	{"TJ",  1, {setNthBitsShort (pArray)}, 
-			opTJUpdate, "" },	
-	{"TL",  1, {setNthBitsShort (pInt, pReal)}, 
-			opTLUpdate, "" },	
-	{"Tc",  1, {setNthBitsShort (pInt, pReal)}, 
-			opTcUpdate, "" },	
-	{"Td",  2, 	{setNthBitsShort (pInt, pReal),	setNthBitsShort (pInt, pReal)}, 
-			opTdUpdate, "" },	
-	{"Tf",  2, 	{setNthBitsShort (pName), setNthBitsShort (pInt, pReal)}, 
-			opTfUpdate, "" },	
-	{"Tj",  1, {setNthBitsShort (pString)}, 
-			opTjUpdate, "" },	
-	{"Tm",  6, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),
-				 setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)}, 
-			opTmUpdate, "" },	
-	{"Tr",  1, {setNthBitsShort (pInt)}, 
-			opTrUpdate, "" },	
-	{"Ts",  1, {setNthBitsShort (pInt, pReal)}, 
-			opTsUpdate, "" },	
-	{"Tw",  1, {setNthBitsShort (pInt, pReal)}, 
-			opTwUpdate, "" },	
-	{"Tz",  1, {setNthBitsShort (pInt, pReal)}, 
-			opTzUpdate, "" },	
-	{"W",   0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"W*",  0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"b",   0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"b*",  0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"c",   6, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),    
-				 setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)}, 
-			opcUpdate, "" },	
-	{"cm",  6, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),    
-				 setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),setNthBitsShort (pInt, pReal)}, 
-			opcmUpdate, "" },	
-	{"cs",  1, {setNthBitsShort (pName)}, 
-			unknownUpdate, "" },	
-	{"d",   2, 	{setNthBitsShort (pArray),setNthBitsShort (pInt, pReal)}, 
-			unknownUpdate, "" },	
-	{"d0",  2, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)}, 
-			unknownUpdate, "" },	
-	{"d1",  6, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),    
-				 setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)}, 
-			unknownUpdate, "" },	
-	{"f",   0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"f*",  0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"g",   1, {setNthBitsShort (pInt, pReal)}, 
-			unknownUpdate, "" },	
-	{"gs",  1, {setNthBitsShort (pName)}, 
-			unknownUpdate, "" },	
-	{"h",   0, {setNoneBitsShort ()}, 
-			ophUpdate, "" },	
-	{"i",   1, {setNthBitsShort (pInt, pReal)}, 
-			unknownUpdate, "" },	
-	{"j",   1, {setNthBitsShort (pInt)}, 
-			unknownUpdate, "" },	
-	{"k",   4, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), 
-				 setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)}, 
-			unknownUpdate, "" },	
-	{"l",   2, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)}, 
-			oplUpdate, "" },	
-	{"m",   2, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)}, 
-			opmUpdate, "" },	
-	{"n",   0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"q",   0, {setNoneBitsShort ()}, 
-			opqUpdate, "Q" },	
-	{"re",  4, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), 
-				 setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)}, 
-			opreUpdate, "" },	
-	{"rg",  3, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)}, 
-			unknownUpdate, "" },	
-	{"ri",  1, {setNthBitsShort (pName)}, 
-			unknownUpdate, "" },	
-	{"s",   0, {setNoneBitsShort ()}, 
-			unknownUpdate, "" },	
-	{"sc",  -4, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),    
-				setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)}, 
-			unknownUpdate, "" },	
-	{"scn", -5,  {setNthBitsShort (pInt, pReal, pName), setNthBitsShort (pInt, pReal, pName),    
-				 setNthBitsShort (pInt, pReal, pName),  setNthBitsShort (pInt, pReal, pName),    
-				setNthBitsShort (pInt, pReal, pName)}, 
-			unknownUpdate, "" },	
-	{"sh",  1, {setNthBitsShort (pName)}, 
-			unknownUpdate, "" },	
-	{"v",   4, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),    
-				 setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)}, 
-			opvUpdate, "" },	
-	{"w",   1, {setNthBitsShort (pInt, pReal)}, 
-			opwUpdate, "" },	
-	{"y",   4, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),    
-				setNthBitsShort (pInt, pReal),  setNthBitsShort (pInt, pReal)}, 
-			opyUpdate, "" },	
+    	{"\\",    3, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pString)},
+            		opSlashUpdate, "" },
+    	{"'",   1, {setNthBitsShort (pString)},
+            		opApoUpdate, "" },
+    	{"B",   0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"B*",  0, {setNoneBitsShort ()},
+           		unknownUpdate, "" },
+    	{"BDC", 2, {setNthBitsShort (pName), setNthBitsShort (pDict, pName)},
+            		unknownUpdate, "" },
+    	{"BI",  -1, {setNoneBitsShort ()},
+            		opBIUpdate, "EI" },
+    	{"BMC", 1, {setNthBitsShort (pName)},
+            		unknownUpdate, "" },
+    	{"BT",  0, {setNoneBitsShort ()},
+            		opBTUpdate, "ET" },
+    	{"BX",  0, {setNoneBitsShort ()},
+            		unknownUpdate, "EX" },
+    	{"CS",  1, {setNthBitsShort (pName)},
+            		unknownUpdate, "" },
+    	{"DP",  2,	{setNthBitsShort (pName), setNthBitsShort (pDict, pName)},
+            		unknownUpdate, "" },
+    	{"Do",  1, {setNthBitsShort (pName)},
+            		opDoUpdate, "" },
+    	{"EI",  -10, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"EMC", 0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"ET",  0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"EX",  0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"F",   0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"G",   1, {setNthBitsShort (pInt, pReal)},
+            		unknownUpdate, "" },
+    	{"ID",  0, {setNoneBitsShort ()},
+            		opIDUpdate, "" },
+    	{"J",   1, {setNthBitsShort (pInt)},
+            		unknownUpdate, "" },
+    	{"K",   4, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),
+                	setNthBitsShort (pInt, pReal),	setNthBitsShort (pInt, pReal)},
+            		unknownUpdate, "" },
+    	{"M",   1, {setNthBitsShort (pInt, pReal)},
+    	        	unknownUpdate, "" },
+    	{"MP",  1, {setNthBitsShort (pName)},
+            		unknownUpdate, "" },
+    	{"Q",   0, {setNoneBitsShort ()},
+            		opQUpdate, "" },
+    	{"RG",  3, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)},
+            		unknownUpdate, "" },
+    	{"S",   0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"SC",  -4, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),
+                	setNthBitsShort (pInt, pReal),	setNthBitsShort (pInt, pReal)},
+            		unknownUpdate, "" },
+    	{"SCN", -5,  {setNthBitsShort (pInt, pReal, pName), setNthBitsShort (pInt, pReal, pName),
+                 	setNthBitsShort (pInt, pReal, pName), setNthBitsShort (pInt, pReal, pName),
+                 	setNthBitsShort (pInt, pReal, pName)},
+            		unknownUpdate, "" },
+    	{"T*",  0, {setNoneBitsShort ()},
+            		opTstarUpdate, "" },
+    	{"TD",  2, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)},
+            		opTDUpdate, "" },
+    	{"TJ",  1, {setNthBitsShort (pArray)},
+            		opTJUpdate, "" },
+    	{"TL",  1, {setNthBitsShort (pInt, pReal)},
+            		opTLUpdate, "" },
+    	{"Tc",  1, {setNthBitsShort (pInt, pReal)},
+            		opTcUpdate, "" },
+    	{"Td",  2, 	{setNthBitsShort (pInt, pReal),	setNthBitsShort (pInt, pReal)},
+            		opTdUpdate, "" },
+    	{"Tf",  2, 	{setNthBitsShort (pName), setNthBitsShort (pInt, pReal)},
+            		opTfUpdate, "" },
+    	{"Tj",  1, {setNthBitsShort (pString)},
+            		opTjUpdate, "" },
+    	{"Tm",  6, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),
+                 	setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)},
+            		opTmUpdate, "" },
+    	{"Tr",  1, {setNthBitsShort (pInt)},
+            		opTrUpdate, "" },
+    	{"Ts",  1, {setNthBitsShort (pInt, pReal)},
+            		opTsUpdate, "" },
+    	{"Tw",  1, {setNthBitsShort (pInt, pReal)},
+            		opTwUpdate, "" },
+    	{"Tz",  1, {setNthBitsShort (pInt, pReal)},
+            		opTzUpdate, "" },
+    	{"W",   0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"W*",  0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"b",   0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"b*",  0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"c",   6, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),
+                 	setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)},
+            		opcUpdate, "" },
+    	{"cm",  6, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),
+                 setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),setNthBitsShort (pInt, pReal)},
+            	  opcmUpdate, "" },
+    	{"cs",  1, {setNthBitsShort (pName)},
+            		unknownUpdate, "" },
+    	{"d",   2, {setNthBitsShort (pArray),setNthBitsShort (pInt, pReal)},
+            		unknownUpdate, "" },
+    	{"d0",  2, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)},
+            		unknownUpdate, "" },
+    	{"d1",  6, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),
+                 	setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)},
+            		unknownUpdate, "" },
+    	{"f",   0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"f*",  0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"g",   1, {setNthBitsShort (pInt, pReal)},
+            		unknownUpdate, "" },
+    	{"gs",  1, {setNthBitsShort (pName)},
+            		unknownUpdate, "" },
+    	{"h",   0, {setNoneBitsShort ()},
+            		ophUpdate, "" },
+    	{"i",   1, {setNthBitsShort (pInt, pReal)},
+            		unknownUpdate, "" },
+    	{"j",   1, {setNthBitsShort (pInt)},
+            		unknownUpdate, "" },
+    	{"k",   4, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),
+                 	setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)},
+            		unknownUpdate, "" },
+    	{"l",   2, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)},
+            		oplUpdate, "" },
+    	{"m",   2, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)},
+            opmUpdate, "" },
+    	{"n",   0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"q",   0, {setNoneBitsShort ()},
+            		opqUpdate, "Q" },
+    	{"re",  4, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),
+                 	setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)},
+            		opreUpdate, "" },
+    	{"rg",  3, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)},
+            		unknownUpdate, "" },
+    	{"ri",  1, {setNthBitsShort (pName)},
+            		unknownUpdate, "" },
+    	{"s",   0, {setNoneBitsShort ()},
+            		unknownUpdate, "" },
+    	{"sc",  -4, {setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),
+                setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)},
+            		unknownUpdate, "" },
+    	{"scn", -5,  {setNthBitsShort (pInt, pReal, pName), setNthBitsShort (pInt, pReal, pName),
+                 setNthBitsShort (pInt, pReal, pName),  setNthBitsShort (pInt, pReal, pName),
+                setNthBitsShort (pInt, pReal, pName)},
+            		unknownUpdate, "" },
+    	{"sh",  1, {setNthBitsShort (pName)},
+            		unknownUpdate, "" },
+    	{"v",   4, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),
+                 setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal)},
+            opvUpdate, "" },
+    	{"w",   1, {setNthBitsShort (pInt, pReal)},
+            		opwUpdate, "" },
+    	{"y",   4, 	{setNthBitsShort (pInt, pReal), setNthBitsShort (pInt, pReal),
+                	setNthBitsShort (pInt, pReal),  setNthBitsShort (pInt, pReal)},
+            	opyUpdate, "" },
 
 };
 
@@ -1139,8 +1139,8 @@ StateUpdater::CheckTypes StateUpdater::KNOWN_OPERATORS[] = {
 GfxState *
 StateUpdater::unknownUpdate (GfxState* state, 
 							boost::shared_ptr<GfxResources>, 
-							const boost::shared_ptr<PdfOperator>, 
-							const PdfOperator::Operands&, BBox* rc)
+                            				const boost::shared_ptr<PdfOperator>,
+                            				const PdfOperator::Operands&, BBox* rc)
 {
 	// Set rectangle from actual position on output devices
 	state->transform(state->getCurX (), state->getCurY(), & rc->xleft, & rc->yleft);

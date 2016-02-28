@@ -32,6 +32,7 @@
 #include "kernel/modecontroller.h"
 #include "kernel/iproperty.h"
 #include "kernel/cstream.h"
+#include <poppler/Stream.h>
 
 class StreamWriter;
 
@@ -1014,7 +1015,7 @@ private:
 	 * initRevisionSpecific method for initialization of internal structures
 	 * which depends on current revision.
 	 */
-	CPdf(StreamWriter * stream, OpenMode openMode);
+    	CPdf(BaseStream * stream, OpenMode openMode);
 	
 	/** Destructor.
 	 * 

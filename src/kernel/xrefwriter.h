@@ -62,7 +62,7 @@ class IPdfWriter;
  * @return true if first indirect object is Linearized dictionary, false
  * otherwise.
  */
-bool checkLinearized(StreamWriter & stream, CXref * xref, Ref * ref);
+bool checkLinearized(BaseStream & stream, CXref * xref, Ref * ref);
 
 /** Checks whether the current revision is the most recent one.
  * @param xref Xref.
@@ -265,7 +265,7 @@ public:
 	 * @throw MalformedFormatExeption if XRef creation fails (instance is
 	 * unusable in such situation).
 	 */
-	XRefWriter(StreamWriter * stream, CPdf * _pdf);
+    	XRefWriter(BaseStream * stream, CPdf * _pdf);
 
 	/** Destrucrtor.
 	 *

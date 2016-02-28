@@ -28,6 +28,7 @@
 #include "kernel/cpdf.h"
 #include "kernel/cxref.h"
 #include "kernel/streamwriter.h"
+#include <poppler/Stream.h>
 #include "kernel/pdfwriter.h"
 #include "kernel/factories.h"
 
@@ -47,7 +48,7 @@ namespace pdfobjects {
 
 namespace utils {
 
-bool checkLinearized(StreamWriter & stream, CXref * xref, Ref * ref)
+bool checkLinearized(BaseStream & stream, CXref * xref, Ref * ref)
 {
 	// searches num gen obj entry. Starts from stream begining
 	stream.reset();
@@ -145,7 +146,7 @@ bool isLatestRevision(const XRefWriter &xref)
 
 } // end of utils namespace
 
-XRefWriter::XRefWriter(StreamWriter * stream, CPdf * _pdf)
+XRefWriter::XRefWriter(BaseStream  * stream, CPdf * _pdf)
 	:CXref(stream), 
 	mode(paranoid), 
 	pdf(_pdf), 

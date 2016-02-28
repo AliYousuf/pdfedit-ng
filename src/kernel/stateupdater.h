@@ -78,8 +78,8 @@ public:
 		
 		/** Function to execute when updating position. */
 		GfxState* (*update) (GfxState* , boost::shared_ptr<GfxResources>, 
-						const boost::shared_ptr<PdfOperator>, 
-						const PdfOperator::Operands&, BBox* rc);
+                        			const boost::shared_ptr<PdfOperator>,
+                        			const PdfOperator::Operands&, BBox* rc);
 		
 		char endTag[MAX_OPERATOR_NAMELEN]; /**< If it is a complex type, its end tag.*/	
 		
@@ -105,8 +105,8 @@ protected:
 public:
 	static GfxState* unknownUpdate (GfxState* state, 
 								 boost::shared_ptr<GfxResources>, 
-								 const boost::shared_ptr<PdfOperator>, 
-								 const PdfOperator::Operands&, BBox* rc);
+                                 				 const boost::shared_ptr<PdfOperator>,
+                                 				 const PdfOperator::Operands&, BBox* rc);
 	
 	//
 	// Accessors
@@ -144,10 +144,10 @@ public:
 	static boost::shared_ptr<GfxState> 
 	updatePdfOperators (PdfOperator::Iterator it, 
 						boost::shared_ptr<GfxResources> res, 
-						/*const*/ GfxState& state, 
+                        			/*const*/ GfxState& state,
 						Ftor ftor) 
 	{
-		assert (!state.isPath());		// if isPath, state is from other ccontentstream or is bad
+        	assert (!state.isPath());		// if isPath, state is from other ccontentstream or is bad
 		GfxState* tmpstate = state.copy (false);
 
 		assert (tmpstate);
