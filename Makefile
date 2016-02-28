@@ -39,7 +39,6 @@ install-gui: source
 install-core-dev: pdfedit-core-dev
 	$(MKDIR) $(INSTALL_ROOT)$(INCLUDE_PATH)
 	$(MKDIR) $(INSTALL_ROOT)$(LIB_PATH)
-	cd $(XPDFROOT) && $(MAKE) install-dev
 	cd $(UTILSROOT) && $(MAKE) install-dev
 	cd $(KERNELROOT) && $(MAKE) install-dev
 	cd $(OSROOT) && $(MAKE) install-dev
@@ -68,7 +67,6 @@ uninstall-gui:
 # exist because if all dedicated uninstall-devs are correct there 
 # shouldn't be nothing left
 uninstall-core-dev:
-	cd $(XPDFROOT) && $(MAKE) uninstall-dev
 	cd $(UTILSROOT) && $(MAKE) uninstall-dev
 	cd $(KERNELROOT) && $(MAKE) uninstall-dev
 	cd $(OSROOT) && $(MAKE) uninstall-dev

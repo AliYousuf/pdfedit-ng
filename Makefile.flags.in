@@ -159,7 +159,7 @@ CXXFLAGS = $(CONFIG_CXXFLAGS)
 ROOT		= @abs_builddir@
 SRCROOT		= $(ROOT)/src
 DOCROOT		= $(ROOT)/doc
-XPDFROOT 	= $(SRCROOT)/xpdf
+POPPLERROOT 	= $(shell pkg-config --cflags poppler)
 KERNELROOT 	= $(SRCROOT)/kernel
 UTILSROOT 	= $(SRCROOT)/utils
 TESTSROOT 	= $(SRCROOT)/tests/
@@ -177,7 +177,7 @@ FREETYPEFLAGS	 = @FT2_CFLAGS@
 ZLIBFLAGS	 = @ZLIB_CPPFLAGS@
 T1FLAGS		 = @t1_CFLAGS@
 PNGFLAGS	 = @png_CFLAGS@
-XPDFLAGS 	 = -I$(XPDFROOT)/ 
+XPDFLAGS 	 = -I$(POPPLERROOT)/ 
 # This is required for qmake which always forces -I when specifying 
 # INCLUDEPATH
 QSAPATH		 = $(QSAROOT)/src/qsa
@@ -223,7 +223,7 @@ MANDATORY_LIBS	 = $(BOOST_LIBS) $(PDFEDIT_LIBS) \
 # goo, splash libraries
 DIST_LIBS =  $(BOOST_LIBS) \
 	     -lkernel -L$(LIB_PATH)/kernel -lutils -L$(LIB_PATH)/utils \
-	     -lxpdf -L$(LIB_PATH)/xpdf -lfofi -L$(LIB_PATH)/fofi \
+	     -lpoppler -L$(LIB_PATH)/poppler -lfofi -L$(LIB_PATH)/fofi \
 	     -lGoo -L$(LIB_PATH)/goo -lsplash -L$(LIB_PATH)/splash \
 	     $(FREETYPE_LIBS) $(T1_LIBS)
 
@@ -232,8 +232,9 @@ DIST_LIBS =  $(BOOST_LIBS) \
 # TODO use more generic library names (LIBPREFIX, suffix according static/
 # dynamic library)
 MANDATORY_LIB_FILES = $(KERNELROOT)/libkernel.a $(UTILSROOT)/libutils.a \
-		      $(XPDFROOT)/xpdf/libxpdf.a $(XPDFROOT)/fofi/libfofi.a \
-		      $(XPDFROOT)/goo/libGoo.a $(XPDFROOT)/splash/libsplash.a
+		       usr/lib/x86_64-linux-gnu/libpoppler-glib.a \
+		       usr/lib/x86_64-linux-gnu/libpoppler-cpp.a \
+                       usr/lib/x86_64-linux-gnu/libpoppler.a\
 
 ########################################
 # Compilation targets
