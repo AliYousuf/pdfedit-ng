@@ -2328,7 +2328,9 @@ using namespace std;
 	// creates FileStream writer to enable changes to the File stream
 	Object obj;
 	obj.initNull();
-	StreamWriter * stream=new FileStreamWriter(file, 0, gFalse, 0, &obj);
+    	Goffset  startA,lengthA ;
+   	// (GooFile* fA, Goffset startA, GBool limitedA,  Goffset lengthA, Object *dictA)
+    	StreamWriter * stream=new FileStreamWriter(file, startA, gFalse, lengthA, &obj);
 	kernelPrintDbg(debug::DBG_DBG,"File stream created");
 
 	// stream is ready, creates CPdf instance

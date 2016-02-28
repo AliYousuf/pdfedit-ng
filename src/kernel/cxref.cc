@@ -435,7 +435,7 @@ using namespace debug;
 	using namespace debug;
 
 	kernelPrintDbg(DBG_DBG, "name="<<name);
-	const Dict * trailer = getTrailerDict()->getDict();
+    	Dict * trailer = getTrailerDict()->getDict();
 
 	// lookupNF doesn't create deep copy, so 
 	// we have to get value and then make deep copy

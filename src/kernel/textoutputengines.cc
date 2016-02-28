@@ -103,16 +103,16 @@ namespace {
 		//
 		// Get real text from operators using xpdf (see the crazy code below)
 		//
-		const GfxFont* font = (const_cast<GfxState&>(state)).getFont();
+         	GfxFont* font = (const_cast<GfxState&>(state)).getFont();
 			if (!font)
 				return text;
 		char* p = const_cast<char*> (text.c_str ());
 		size_t len = text.size();
 		int n = 0, uLen = 0;
 		CharCode code;
-		Unicode u;
+        	Unicode *u;
 		double d = 0.0;
-
+        	int xx ;
 		string result;
 		while (len > 0) 
 		{
@@ -120,19 +120,18 @@ namespace {
 									static_cast<int>(len), 
 									&code,
 									&u, 
-									sizeof(Unicode), 
 									&uLen,
 									&d, &d, &d, &d);
 
 			p += n;
 			len -= n;
-		
+            		xx = static_cast<int>(u);
 			// Put rather name tham the character
-			const Gfx8BitFont* f = dynamic_cast<const Gfx8BitFont*> (font);
+            		Gfx8BitFont* f = dynamic_cast<Gfx8BitFont*> (font);
 			if (f)
 			{
 				string tmp;
-				const char* c = f->getCharName(code);
+                		char* c = f->getCharName(code);
 				if (c)
 					tmp = c;
 				if (1 < tmp.size())
@@ -142,11 +141,11 @@ namespace {
 				else
 					result += tmp;
 			
-			}else
-				result += static_cast<char> (u&0xFF);
+            		}else
+                		result += static_cast<char> (xx &(0xFF));
 		}
 
-		return result;
+        	return result;
 	}
 
 	//
@@ -314,7 +313,7 @@ SimpleWordEngine::operator() (const PdfOperatorPtr op, const GfxState& gfx_state
 			sfrag->add (s);
 			sfrag->add (res);
 			// Set fragment font
-			const GfxFont* font = s->getFont();
+            		GfxFont* font = s->getFont();
 			if (font) 
 			{
 				sfrag->add (string (font->getTag()->getCString()));

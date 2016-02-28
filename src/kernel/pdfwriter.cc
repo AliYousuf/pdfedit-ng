@@ -28,6 +28,7 @@
 #include "kernel/cobject.h"
 #include "kernel/streamwriter.h"
 #include "kernel/factories.h"
+#include <poppler/Hints.h>
 #include <zlib.h>
 
 /** Size of buffer for xref table row.
@@ -829,8 +830,9 @@ using namespace debug;
 		return NULL;
 	}
 	Object dict;
+    	Goffset  startA,lengthA ;
 	FileStreamData *streamData = new FileStreamData;
-	streamData->stream = new FileStreamWriter(file, 0, false, 0, &dict);
+    	streamData->stream = new FileStreamWriter(file, startA, false, lengthA, &dict);
 	streamData->file = file;
 	return streamData;
 }
