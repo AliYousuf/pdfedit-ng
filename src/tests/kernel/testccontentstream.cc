@@ -303,7 +303,7 @@ opcount (UNUSED_PARAM	ostream& oss, const char* fileName)
 {
 	boost::shared_ptr<CPdf> pdf = getTestCPdf (fileName);
 	/// Intermezzo
-	boost::scoped_ptr<PDFDoc> doc  (new PDFDoc (new GString(fileName), NULL, NULL));
+    	boost::scoped_ptr<PDFDoc> doc  (new PDFDoc (new GooString(fileName), NULL, NULL));
 	if(!doc->isOk())
 	{
 		std::cout << "Bad PDF document: " << fileName << flush;
@@ -528,7 +528,7 @@ primitiveprintContentStream (UNUSED_PARAM	ostream& oss, const char* fileName)
 	{// what if file is corrupted etc..
 		boost::shared_ptr<CPdf> pdf = getTestCPdf (fileName);
 	}
-	boost::scoped_ptr<PDFDoc> doc (new PDFDoc (new GString(fileName), NULL, NULL));
+    	boost::scoped_ptr<PDFDoc> doc (new PDFDoc (new GooString(fileName), NULL, NULL));
 	int pagesNum = 1;
 	
 	//
@@ -608,7 +608,7 @@ cstreamsreader (UNUSED_PARAM	ostream& oss, const char* fileName)
 		boost::shared_ptr<CPage> page = pdf->getPage (i + 1);
 
 		/// Intermezzo cstreamsreader
-		boost::scoped_ptr<PDFDoc> doc  (new PDFDoc (new GString(fileName), NULL, NULL));
+        	boost::scoped_ptr<PDFDoc> doc  (new PDFDoc (new GooString(fileName), NULL, NULL));
 		if (doc->isEncrypted())
 			continue;
 		int pagesNum = i + 1;

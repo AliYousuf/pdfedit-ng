@@ -340,9 +340,9 @@ namespace {
 
 		GfxFont* font = NULL;
 
-		if (!(font = res->lookupFont (val.c_str())))
+       	if (!(font = res->lookupFont ((char*)val.c_str())))
 			return state;		// same as displaing with xpdf/Gfx
-		
+
 		state->setFont (font, getDoubleFromIProperty (args[1]));
 		
 		// return changed state
@@ -760,19 +760,19 @@ namespace {
 GfxState*
 StateUpdater::printTextUpdate (GfxState* state, const std::string& txt, BBox* rc)
 {
-	const GfxFont *font;
+    	GfxFont *font;
 	int wMode;
 	double riseX, riseY;
 	CharCode code;
-	Unicode u[8];
-	double x, y, dx, dy,/* dx2, dy2,*/ curX, curY, tdx, tdy, lineX, lineY;
-	double originX = 0, originY, tOriginX, tOriginY;
+     	Unicode * u[8];
+    	double x, y, dx, dy,/* dx2, dy2,*/ curX, curY, tdx, tdy, lineX, lineY;
+    	double originX = 0, originY, tOriginX, tOriginY;
 	double oldCTM[6], newCTM[6];
 	const double *mat = NULL;
 	//Dict *resDict = NULL;
 	char *p;
 	int len = 0, n = 0, uLen = 0,/* nChars = 0, nSpaces = 0,*/ i = 0;
-	GString s (txt.c_str(),(Guint)txt.size());
+    	GooString s (txt.c_str(),(Guint)txt.size());
 
 	font = state->getFont();
 	wMode = font->getWMode();
@@ -818,15 +818,14 @@ StateUpdater::printTextUpdate (GfxState* state, const std::string& txt, BBox* rc
 		len = s.getLength();
 		while (len > 0) 
 		{
+
 		  n = font->getNextChar(p, len, &code,
-				  u, (int)(sizeof(u) / sizeof(Unicode)), &uLen,
-				  &dx, &dy, &originX, &originY);
-		  
-		  //
+                  		  u, &uLen, &dx, &dy, &originX, &originY);
+                  //
 		  // Try to find out the height and width of this letter
 		  //
 		  boost::shared_ptr< ::Object> charProc(XPdfObjectFactory::getInstance(), xpdf::object_deleter());
-		  static_cast<const Gfx8BitFont*>(font)->getCharProc (code, charProc.get());
+          	  static_cast<Gfx8BitFont*>(font)->getCharProc (code, charProc.get());
 		  if (charProc->isStream())
 		  {
 			  // Make parser
@@ -837,15 +836,17 @@ StateUpdater::printTextUpdate (GfxState* state, const std::string& txt, BBox* rc
 						  )
 					  );
 			  boost::shared_ptr< ::Object> obj(XPdfObjectFactory::getInstance(), xpdf::object_deleter());
+
 			  // Read till BI found
-			  while (!parser->eofOfActualStream() && !obj->isCmd("BI"))
+
+              		  while ( !obj->isCmd("endstream") && !obj->isCmd("BI"))
 			  {
 				obj->free ();
 				if(!parser->getObj (obj.get())) 
 					throwMalformedFormat("bad data stream");
 			  }
 
-			  if (!parser->eofOfActualStream())
+              		  if (!obj->isCmd("endstream"))
 			  {
 				  //
 				  // Find height information in image stream dictionary
@@ -929,8 +930,8 @@ StateUpdater::printTextUpdate (GfxState* state, const std::string& txt, BBox* rc
 		len = s.getLength();
 		while (len > 0) {
 			n = font->getNextChar(p, len, &code,
-								  u, (int)(sizeof(u) / sizeof(Unicode)), &uLen,
-								  &dx, &dy, &originX, &originY);
+                                  				  u, &uLen,&dx,
+                                                                 &dy, &originX, &originY);
 			if (wMode) {
 				dx *= state->getFontSize();
 				dy = dy * state->getFontSize() + state->getCharSpace();

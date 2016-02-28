@@ -52,18 +52,6 @@ void CXref::init()
 	internal_fetch = false;
 }
 
-CXref::CXref(BaseStream * stream):XRef(stream), internal_fetch(true)
-{
-	try
-	{
-		init();
-	}catch(...)
-	{
-		delete stream;
-		throw;
-	}
-}
-
 void CXref::cleanUp()
 {
 	using namespace debug;
@@ -110,7 +98,7 @@ void CXref::cleanUp()
 
 	kernelPrintDbg(DBG_DBG, "Cleaning newStorage");
 	// newStorage doesn't need special entries deallocation
-	newStorage.clear();
+
 	kernelPrintDbg(DBG_DBG, "newStorage cleaned up");
 
 	// remove changed trailer
@@ -122,19 +110,11 @@ CXref::~CXref()
 using namespace debug;
 
 	kernelPrintDbg(DBG_DBG, "");
-	/* FIXME: uncoment when cache is ready.
-	if(cache)
-	{
-		kernelPrintDbg(DBG_INFO, "Deallocating cache");
-		delete cache;
-	}
-	*/
+
 	
 	kernelPrintDbg(DBG_DBG, "Deallocating internal structures");
 	cleanUp();
 	
-	// XRef doesn't deallocate stream, so it has to be deallocated here
-	delete str;
 }
 
 ::Object * CXref::changeObject(::Ref ref, ::Object * instance)
@@ -146,20 +126,9 @@ using namespace debug;
 
 	check_need_credentials(this);
 
-	// discards from cache
-	/* FIXME uncoment if cache is available
-	if(cache)
-		cache->discard(ref);
-	*/
 
-	// clones given object
-	Object * clonedObject=instance->clone();
-	if(!clonedObject)
-	{
-		// cloning has failed
-		kernelPrintDbg(DBG_ERR, ref <<" object ("<< instance->getType()<<") can't be cloned.");
-		throw NotImplementedException("clone failure.");
-	}
+
+
 
 	// searches in changedStorage
 	// this is returned so it can be used for some
@@ -176,7 +145,6 @@ using namespace debug;
 		changedEntry=new ObjectEntry();
 		kernelPrintDbg(DBG_DBG, "object is changed for the first time, creating changedEntry");
 	}
-	changedEntry->object=clonedObject;
 	assert(ref.num!=0);
 
 	// return value - original one - can be safely ignored, because either new 
@@ -188,7 +156,7 @@ using namespace debug;
 	// been set after initialization)
 	if(newStorage.contains(ref))
 	{
-		newStorage.put(ref, INITIALIZED_REF);
+        	//newStorage.put(ref, INITIALIZED_REF);
 		kernelPrintDbg(DBG_DBG, "newStorage entry changed to INITIALIZED_REF for "<<ref);
 	}
 	
@@ -210,17 +178,7 @@ using namespace debug;
 	
 	check_need_credentials(this);
 
-	Object * clonedObject=value->clone();
-	if(!clonedObject)
-	{
-		// cloning has failed
-		kernelPrintDbg(DBG_ERR, "object ("
-				<< value->getType()
-				<<") can't be cloned for name="
-				<<name
-				<<". Uses objNull instead");
-		throw NotImplementedException("clone failure.");
-	}
+
 	char * key=copyString(name);
 
 	// make sure that we will write into the CXref::currTrailer and
@@ -232,11 +190,8 @@ using namespace debug;
 		currTrailer = boost::shared_ptr<Object>(XPdfObjectFactory::getInstance(), xpdf::object_deleter());
 		XRef::getTrailerDict()->copy(currTrailer.get());
 	}
-	::Object * prev = getTrailerDict()->dictUpdate(key, clonedObject);
-	gfree(clonedObject);
+    	::Object * prev ;
 
-	// update doesn't store key if key, value has been already in the 
-	// dictionary
 	if(prev)
 		gfree(key);
 
@@ -260,25 +215,17 @@ using namespace debug;
 	// is allocated by blocks and so there are entries which are marked 
 	// as free but they are not realy removed objects.
 	int objectCount=0, xrefCount=XRef::getNumObjects();
-	for(; i<size && i<MAXOBJNUM && objectCount<xrefCount; ++i)
+    	for(; i<MAXOBJNUM && objectCount<xrefCount; ++i)
 	{
-		if(entries[i].type!=xrefEntryFree)
-		{
-			++objectCount;
-			continue;
-		}
+
 
 		// reference is never reused if generation number is MAXOBJGEN
 		// according to specification
-		if(entries[i].gen>=MAXOBJGEN || entries[i].gen<0)
-		{
-			kernelPrintDbg(DBG_DBG, "Entry ["<<i<<", "<<entries[i].gen<<"] can't be reused. MAXOBJGEN reached.");
-			continue;
-		}
+
 
 		// entry is marked as free, we can reuse it only if it is not in
 		// reservation process - not in newStorage
-		Ref ref={i, entries[i].gen};
+        	Ref ref={i};
 		if(newStorage.contains(ref))
 		{
 			continue;
@@ -349,8 +296,6 @@ using namespace debug;
 	// it's not possible to create indirect reference value or
 	// any other internaly (by xpdf) used object types
 	// FIXME
-	//if(type==objRef || type==objError || type==objEOF || type==objNone)
-	//	return 0;
 
 	::Object * obj=XPdfObjectFactory::getInstance();
 	
@@ -402,6 +347,10 @@ using namespace debug;
 	return obj;
 }
 
+
+
+
+
 RefState CXref::knowsRef(const ::Ref& ref)const
 {
 using namespace debug;
@@ -421,7 +370,7 @@ using namespace debug;
 
 	kernelPrintDbg(DBG_DBG, "Reference is not in newStorage. Trying XRef.");
 	// object has to be in in XRef
-	state=XRef::knowsRef(ref);
+    	state=knowsRefs(ref);
 	kernelPrintDbg(DBG_DBG, "Reference state in XRef is "<<state);
 	return state;
 }
@@ -493,9 +442,9 @@ using namespace debug;
 	// calling clone method. To keep clean reference counting
 	// obj has to be freed
 	boost::shared_ptr< ::Object> obj(XPdfObjectFactory::getInstance(), xpdf::object_deleter());
-	trailer->lookupNF(name, obj.get());
+    	trailer->lookupNF(name, obj.get());
 
-	::Object * retValue=obj->clone();
+    	::Object * retValue;
 	if(!retValue)
 	{
 		// cloning has failed
@@ -522,7 +471,7 @@ using namespace debug;
 
 	// creates deep copy and frees object from getDocInfo
 	// and initialize parameter from cloned value
-	::Object * retObj=docObj->clone();
+    	::Object * retObj;
 	if(!retObj)
 	{
 		// cloning has failed
@@ -552,7 +501,7 @@ using namespace debug;
 	// creates deep copy and frees object (because getDocInfoNF 
 	// uses copy method) from getDocInfo
 	// and initialize parameter from cloned value
-	::Object * retObj=docObj->clone();
+    	::Object * retObj;
 	if(!retObj)
 	{
 		// cloning has failed
@@ -608,7 +557,7 @@ using namespace debug;
 			kernelPrintDbg(DBG_CRIT, ref << " changed object is NULL!");
 			return obj;
 		}
-		::Object * deepCopy=entry->object->clone();
+        	::Object * deepCopy;
 		assert(deepCopy);
 
 		// shallow copy of content
@@ -624,18 +573,12 @@ using namespace debug;
 	// delegates to original implementation
 	kernelPrintDbg(DBG_DBG, ref<<" is not changed - using Xref");
 	boost::shared_ptr< ::Object> tmpObj(XPdfObjectFactory::getInstance(), xpdf::object_deleter());
-	XRef::fetch(num, gen, tmpObj.get());
-	if (!isOk())
-	{
-		kernelPrintDbg(DBG_ERR, ref<<" object fetching failed with code="
-				<<errCode);
-		throw MalformedFormatExeption("bad stream");
-	}
+
 
 	// clones fetched object
 	// this has to be done because return value may be stream and we want to
 	// prevent direct changing of the stream
-	Object * cloneObj=tmpObj->clone();
+    	Object * cloneObj;
 	// deallocates XRef returned object content
 	if(!cloneObj)
 	{
@@ -670,14 +613,13 @@ int CXref::getNumObjects()const
 	kernelPrintDbg(DBG_DBG, "");
 
 	size_t newSize=0;
-	RefStorage::ConstIterator begin, i;
+    	RefStorage::ConstIterator begin , i;
 
 	for(i=newStorage.begin(); i!=newStorage.end(); ++i)
 		if(i->second==INITIALIZED_REF)
 			++newSize;
 
-	kernelPrintDbg(DBG_DBG, "original objects count="<<XRef::getNumObjects()<<" newly created="<<newSize);
-	return XRef::getNumObjects() + newSize;
+    	return  newSize;
 }
 
 
@@ -694,13 +636,11 @@ using namespace debug;
 
 	// clears XRef internals and forces to fill them again
 	kernelPrintDbg(DBG_DBG, "Destroing XRef internals");
-	XRef::destroyInternals();
-	kernelPrintDbg(DBG_DBG, "Initializes XRef internals");
-	XRef::initInternals(xrefOff);
 
-	// sets lastXRefPos to xrefOff, because initRevisionSpecific doesn't do it
-	lastXRefPos=xrefOff;
-	kernelPrintDbg(DBG_DBG, "New lastXRefPos value="<<lastXRefPos);
+	kernelPrintDbg(DBG_DBG, "Initializes XRef internals");
+
+
+
 
 	// checks encryption state for the revision
 	checkEncryptedContent();
@@ -713,11 +653,7 @@ bool CXref::checkEncryptedContent()
 	enableInternalFetch();
 	getTrailerDict()->dictLookup("Encrypt", encrypt.get());
 	disableInternalFetch();
-	encrypted = false;
-	if ((encrypted = encrypt->isDict())) {
-		needs_credentials = true;
-		encrypted = true;
-	}
+
 
 	return needs_credentials;
 }
@@ -730,15 +666,15 @@ void CXref::setCredentials(const char * ownerPasswd, const char * userPasswd)
 		return;
 	}
 
-	GString * op = NULL, * up = NULL;
+    	GooString * op = NULL, * up = NULL;
 	if(ownerPasswd)
-		op = new GString(ownerPasswd);
+        	op = new GooString(ownerPasswd);
 	if(userPasswd)
-		up = new GString(userPasswd);
+        	up = new GooString(userPasswd);
 
 	GBool result;
 	enableInternalFetch();
-	SecurityHandler * handler = ::checkEncryptionCred(this, op, up, result);
+    	SecurityHandler * handler ;
 	disableInternalFetch();
 
 	// we are not able to find a security handler
@@ -760,7 +696,7 @@ void CXref::setCredentials(const char * ownerPasswd, const char * userPasswd)
 	if(handler)
 	{
 		kernelPrintDbg(debug::DBG_DBG, "Setting provided ecnryption credentials.");
-		::setEncryptionCred(this, handler);
+
 		delete handler;
 	}else
 		kernelPrintDbg(debug::DBG_DBG, "No special credentials required for encrypted document");

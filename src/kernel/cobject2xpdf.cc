@@ -123,10 +123,10 @@ namespace {
 				// characters
 				val.clear();
 				size_t len = obj.getString()->getLength();
-				const GString * xpdfString=obj.getString();
+                		GooString * xpdfString=obj.getString();
 				for(size_t i=0; i< len; ++i)
 				{
-					char c = xpdfString->getChar(static_cast<int>(i));
+                    			char c = xpdfString->getChar(static_cast<int>(i));
 					val += c;
 				}
 				assert (len == val.length());
@@ -151,12 +151,12 @@ namespace {
 	struct xpdfRefReader
 	{
 		public:
-			void operator() (Storage obj, Val val)
+            		void operator() (Storage obj, Val val) const
 			{
 				if (objRef != obj.getType())
 					throw ElementBadTypeException ("Xpdf object is not ref.");
 				val.num = obj.getRefNum();
-				val.gen = obj.getRefGen();
+                		val.gen = obj.getRefGen();
 			}
 	};
 	
@@ -206,7 +206,7 @@ namespace {
 			Object* operator() (Storage obj, Val val)
 			{
 				const char * str = val.c_str();
-				return obj->initString (new GString(str, static_cast<int>(val.length())));
+                		return obj->initString (new GooString(str, static_cast<int>(val.length())));
 			}
 	};
 
@@ -436,44 +436,44 @@ namespace {
 	template<typename ObjectToParse, typename CObject>
 	struct xpdfArrayReader
 	{public:
-		void operator() (IProperty& ip, const ObjectToParse array, CObject resultArray)
+        	void operator() (IProperty& ip,  ObjectToParse array, CObject resultArray)
 		{
 			assert (objArray == array.getType());
 			if (objArray != array.getType())
 				throw ElementBadTypeException ("Array reader got xpdf object that is not array.");
 			assert (0 <= array.arrayGetLength ());
-			utilsPrintDbg (debug::DBG_DBG, "xpdfArrayReader\tobjType = " << array.getTypeName() );
+            		utilsPrintDbg (debug::DBG_DBG, "xpdfArrayReader\tobjType = " << array.getTypeName() );
 			
 			boost::shared_ptr<CPdf> pdf = ip.getPdf ().lock ();
-			boost::shared_ptr< ::Object> obj(XPdfObjectFactory::getInstance(), xpdf::object_deleter());
+           		boost::shared_ptr< ::Object> obj(XPdfObjectFactory::getInstance(), xpdf::object_deleter());
 
-			int len = array.arrayGetLength ();
+            		int len = array.arrayGetLength ();
 			for (int i = 0; i < len; ++i)
 			{
 				// Get Object at i-th position
-				array.arrayGetNF (i, obj.get());
+                		array.arrayGetNF (i, obj.get());
 					
-				boost::shared_ptr<IProperty> cobj;
+                		boost::shared_ptr<IProperty> cobj;
 				// Create CObject from it
-				if (isPdfValid(pdf))
-				{
-					hasValidRef (ip);
-					cobj = boost::shared_ptr<IProperty> (createObjFromXpdfObj (pdf, *obj, ip.getIndiRef()));
+                		if (isPdfValid(pdf))
+                		{
+                    			hasValidRef (ip);
+                    			cobj = boost::shared_ptr<IProperty> (createObjFromXpdfObj (pdf, *obj, ip.getIndiRef()));
 
-				}else
-				{
-					cobj = boost::shared_ptr<IProperty> (createObjFromXpdfObj (*obj));
-				}
+                		}else
+                		{
+                    			cobj = boost::shared_ptr<IProperty> (createObjFromXpdfObj (*obj));
+                		}
 
-				if (cobj)
-				{
+                		if (cobj)
+                		{
 					// Store it in the storage
-					resultArray.push_back (cobj);
+                    			resultArray.push_back (cobj);
 					// Free resources allocated by the object
-					obj->free ();
+                    			obj->free ();
 						
-				}else
-					throw CObjInvalidObject ();
+                		}else
+                    			throw CObjInvalidObject ();
 
 			}	// for
 		}	// void operator
@@ -485,41 +485,41 @@ namespace {
 	template<typename ObjectToParse, typename CObject>
 	struct xpdfDictReader
 	{public:
-		void operator() (IProperty& ip, const ObjectToParse dict, CObject resultDict)
-		{
-			assert (objDict == dict.getType());
-			if (objDict != dict.getType())
-				throw ElementBadTypeException ("Dict reader got xpdf object that is not dict.");
-			assert (0 <= dict.dictGetLength ());
-			utilsPrintDbg (debug::DBG_DBG, "xpdfDictReader\tobjType = " << dict.getTypeName() );
+        	void operator() (IProperty& ip, ObjectToParse dict, CObject resultDict) const
+        	{
+            		assert (objDict == dict.getType());
+            		if (objDict != dict.getType())
+                		throw ElementBadTypeException ("Dict reader got xpdf object that is not dict.");
+            		assert (0 <= dict.dictGetLength ());
+            		utilsPrintDbg (debug::DBG_DBG, "xpdfDictReader\tobjType = " << dict.getTypeName() );
 			
-			boost::shared_ptr<CPdf> pdf = ip.getPdf ().lock ();
-			boost::shared_ptr< ::Object> obj(XPdfObjectFactory::getInstance(), xpdf::object_deleter());
+            		boost::shared_ptr<CPdf> pdf = ip.getPdf ().lock ();
+            		boost::shared_ptr< ::Object> obj(XPdfObjectFactory::getInstance(), xpdf::object_deleter());
 
-			int len = dict.dictGetLength ();
-			for (int i = 0; i < len; ++i)
-			{
-				// Get Object at i-th position
-				string key (dict.dictGetKey (i));
-				obj->free ();
-				dict.dictGetValNF (i,obj.get());
+            		int len = dict.dictGetLength ();
+            		for (int i = 0; i < len; ++i)
+            		{
+                		// Get Object at i-th position
+                		string key (dict.dictGetKey (i));
+                		obj->free ();
+                		dict.dictGetValNF (i,obj.get());
 
-				boost::shared_ptr<IProperty> cobj;
-				// Create CObject from it
-				if (isPdfValid (pdf))
-					cobj = boost::shared_ptr<IProperty> (createObjFromXpdfObj (pdf, *obj, ip.getIndiRef()));
-				else
-					cobj = boost::shared_ptr<IProperty> (createObjFromXpdfObj (*obj));
+                		boost::shared_ptr<IProperty> cobj;
+                		// Create CObject from it
+                		if (isPdfValid (pdf))
+                    			cobj = boost::shared_ptr<IProperty> (createObjFromXpdfObj (pdf, *obj, ip.getIndiRef()));
+               		else
+                    			cobj = boost::shared_ptr<IProperty> (createObjFromXpdfObj (*obj));
 
-				if (cobj)
-				{
-					// Store it in the storage
-					resultDict.push_back (make_pair(key,cobj));
+                		if (cobj)
+                		{
+                    			// Store it in the storage
+                    			resultDict.push_back (make_pair(key,cobj));
 
-				}else
-					throw CObjInvalidObject ();
-			}
-		}
+                		}else
+                    		throw CObjInvalidObject ();
+            		}
+        	}
 	};
 
 	/*
@@ -602,7 +602,7 @@ getStringFromXpdfStream (std::string& str, ::Object& obj)
 // Creates CObject from xpdf object.
 // 
 IProperty*
-createObjFromXpdfObj (boost::shared_ptr<CPdf> pdf, const Object& obj,const IndiRef& ref)
+createObjFromXpdfObj (boost::shared_ptr<CPdf> pdf, Object& obj,const IndiRef& ref)
 {
 	switch (obj.getType ())
 	{
@@ -644,7 +644,7 @@ createObjFromXpdfObj (boost::shared_ptr<CPdf> pdf, const Object& obj,const IndiR
 }
 
 IProperty*
-createObjFromXpdfObj (const Object& obj)
+createObjFromXpdfObj (Object& obj)
 {
 	switch (obj.getType ())
 	{
@@ -712,31 +712,31 @@ template Object* simpleValueToXpdfObj<pRef,const IndiRef&> (const IndiRef& val);
 //
 template <PropertyType Tp,typename T> 
 void
-simpleValueFromXpdfObj (const Object& obj, T val)
+simpleValueFromXpdfObj ( Object& obj, T val)
 {
-	typename ProcessorTraitSimple<const Object&, T, Tp>::xpdfReadProcessor rp;
+    	typename ProcessorTraitSimple< Object&, T, Tp>::xpdfReadProcessor rp;
 	rp (obj,val);
 }
 
 template
 void
-simpleValueFromXpdfObj<pReal, double&> (const Object&, double& val);
+simpleValueFromXpdfObj<pReal, double&> ( Object&, double& val);
 
 //
 // Special case for pNull
 //
 template <> 
 inline void
-simpleValueFromXpdfObj<pNull,NullType&> (const Object&, NullType&) 
+simpleValueFromXpdfObj<pNull,NullType&> (Object&, NullType&)
 {
 	/*assert (!"operation not permitted...");*//*THIS IS FORBIDDEN IN THE CALLER*/
 }
-template void simpleValueFromXpdfObj<pBool, bool&> (const Object&, bool& val);
-template void simpleValueFromXpdfObj<pInt, int&> (const Object&,  int& val);
-template void simpleValueFromXpdfObj<pReal, double&> (const Object&, double& val);
-template void simpleValueFromXpdfObj<pString, string&> (const Object&, string& val);
-template void simpleValueFromXpdfObj<pName, string&> (const Object&, string& val);
-template void simpleValueFromXpdfObj<pRef, IndiRef&> (const Object&, IndiRef& val);
+template void simpleValueFromXpdfObj<pBool, bool&> ( Object&, bool& val);
+template void simpleValueFromXpdfObj<pInt, int&> ( Object&,  int& val);
+template void simpleValueFromXpdfObj<pReal, double&> ( Object&, double& val);
+template void simpleValueFromXpdfObj<pString, string&> ( Object&, string& val);
+template void simpleValueFromXpdfObj<pName, string&> ( Object&, string& val);
+template void simpleValueFromXpdfObj<pRef, IndiRef&> ( Object&, IndiRef& val);
 
 
 
@@ -745,20 +745,20 @@ template void simpleValueFromXpdfObj<pRef, IndiRef&> (const Object&, IndiRef& va
 //
 template <PropertyType Tp,typename T> 
 inline void
-complexValueFromXpdfObj (IProperty& ip, const Object& obj, T val)
+complexValueFromXpdfObj (IProperty& ip, Object& obj, T val)
 {
-	typename ProcessorTraitComplex<const Object&, T, Tp>::xpdfReadProcessor rp;
+    	typename ProcessorTraitComplex<Object&, T, Tp>::xpdfReadProcessor rp;
 	rp (ip, obj, val);
 }
 
 template void complexValueFromXpdfObj<pArray, CArray::Value&> 
 		(IProperty& ip, 
-		 const Object& obj, 
+         		Object& obj,
 		 CArray::Value& val);
 
 template void complexValueFromXpdfObj<pDict, CDict::Value&>
 		(IProperty& ip, 
-		 const Object& obj, 
+         	Object& obj,
 		 CDict::Value& val);
 
 
@@ -823,13 +823,13 @@ xpdfObjFromString (const std::string& str, XRef* xref)
 	char* pStr = (char *)gmalloc(static_cast<int>(len + 1));
 	memcpy(pStr, str.c_str(), len);
 	pStr[len] = '\0';
-					
+      // MemStream(char *bufA, Goffset startA, Goffset lengthA, Object *dictA);
 	boost::scoped_ptr<Parser> parser(
 			new Parser (xref, 
-				new Lexer (xref,
-					new MemStream (pStr, 0, static_cast<int>(len), &dct, gTrue)
+                		new Lexer (xref,
+                    			new MemStream (pStr, 0, static_cast<int>(len), &dct)
 					),
-				gTrue
+                		true
 				)
 			);
 	//
@@ -882,7 +882,7 @@ xpdfStreamObjFromBuffer (const CStream::Buffer& buffer, const CDict& dict)
 	::Stream* stream = new ::MemStream (tmpbuf, 
 										static_cast<Guint>(0), 
 										static_cast<Guint>(buffer.size()), 
-										objDict, true);
+                                        					objDict);
 	// Set filters
 	stream = stream->addFilters (objDict);
 	stream->reset ();
@@ -934,7 +934,7 @@ unsigned char* bufferFromStream(Stream& str, size_t dictLength, size_t& size)
 	return buffer;
 }
 
-unsigned char* convertStreamToDecodedData(const Object& obj, size_t& size)
+unsigned char* convertStreamToDecodedData(Object& obj, size_t& size)
 {
 	Object lenObj;
 	obj.streamGetDict()->lookup("Length", &lenObj);
@@ -954,18 +954,15 @@ unsigned char* convertStreamToDecodedData(const Object& obj, size_t& size)
 	const char * fieldsToRemove[] = {"Filter", "DecodeParams", "F", "FFilter", "FDecodeParams", "DL", NULL};
 	for(int i=0; fieldsToRemove[i]; ++i)
 	{
-		Object * entry = obj.getStream()->getBaseStream()->dictDel(fieldsToRemove[i]);
-		if(entry)
-		{
-			utilsPrintDbg(debug::DBG_DBG, "Removing "<< fieldsToRemove[i] <<" entry from the stream");
-			freeXpdfObject(entry);
-		}
+        	dict->remove(fieldsToRemove[i]);
+        	utilsPrintDbg(debug::DBG_DBG, "Removing "<< fieldsToRemove[i] <<" entry from the stream");
+
 	}
 	
 	return buffer;
 }
 
-size_t streamToCharBuffer (const Object & streamObject, Ref* ref, CharBuffer & outputBuf, 
+size_t streamToCharBuffer (Object & streamObject, Ref* ref, CharBuffer & outputBuf,
 		stream_data_extractor extractor)
 {
 	utilsPrintDbg(debug::DBG_DBG, "");
@@ -1022,10 +1019,10 @@ size_t streamToCharBuffer (const Object & streamObject, Ref* ref, CharBuffer & o
 	{
 		lenghtObj->initInt(realBufferLen);
 		// don't need to give copyString(Length) because we are sure, that
-		// this entry already exists
- 		Object* oldLen = streamObject.getStream()->getBaseStream()->dictUpdate("Length", lenghtObj.get());
-		if(oldLen)
-			freeXpdfObject(oldLen);
+        	// this entry already exists
+        	char *x =(char *)"Length";
+        	dict->add(x,lenghtObj.get());//streamObject.getStream()->getBaseStream()->dictUpdate("Length", lenghtObj.get());
+
 	}
 
 	// FIXME dirty workaround because we don't have dedicated function
