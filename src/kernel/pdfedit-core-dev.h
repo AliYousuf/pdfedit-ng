@@ -90,8 +90,7 @@ struct pdfedit_core_dev_init
  *
  * @return 0 on success, -error code otherwise.
  */
-int pdfedit_core_dev_init(int *argc=NULL, char ***argv=NULL, const struct pdfedit_core_dev_init * init=NULL)
-	WARN_UNUSED_RESULT;
+int pdfedit_core_dev_init(int *argc=NULL, char ***argv=NULL, const struct pdfedit_core_dev_init * init=NULL);
 
 /** Checks whether global pdfedit_core_dev_init has been called.
  * This method is for internal purposes only and should be called by all
@@ -102,7 +101,7 @@ int pdfedit_core_dev_init(int *argc=NULL, char ***argv=NULL, const struct pdfedi
  *
  * @return true on success, false otherwise.
  */
-bool pdfedit_core_dev_init_check()WARN_UNUSED_RESULT;
+bool pdfedit_core_dev_init_check();
 
 /** Clean up pdfedit_core_dev environment.
  * This function should be called in the final cleanup.

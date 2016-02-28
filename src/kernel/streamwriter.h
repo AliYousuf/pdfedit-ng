@@ -105,7 +105,7 @@ public:
  * Implements BaseStreamWriter and FileStream to enable writing to the file
  * stream.
  */
-class FileStreamWriter:  virtual public StreamWriter, public FileStream
+class FileStreamWriter:  public StreamWriter, public FileStream
 {
 public:
 	/** Costructor.

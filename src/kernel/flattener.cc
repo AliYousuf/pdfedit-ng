@@ -91,7 +91,7 @@ void collectReachableRefs(::XRef& xref, const ::Object &obj, Flattener::RefList 
  * @param refList List of already collected references.
  * 
  */
-void collectDictRefElems(::XRef &xref, const ::Dict &dict, Flattener::RefList &refList)
+void collectDictRefElems(::XRef &xref, ::Dict &dict, Flattener::RefList &refList)
 {
 	boost::shared_ptr< ::Object> elem(XPdfObjectFactory::getInstance(), xpdf::object_deleter());
 	for(int i=0; i<dict.getLength(); i++)
@@ -117,7 +117,7 @@ void collectDictRefElems(::XRef &xref, const ::Dict &dict, Flattener::RefList &r
  * If you start with the Trailer then you will collect all reachable 
  * objects.
  */
-void collectReachableRefs(XRef& xref, const ::Object &obj, Flattener::RefList &refList)
+void collectReachableRefs(XRef& xref, ::Object &obj, Flattener::RefList &refList)
 {
 	switch(obj.getType())
 	{
@@ -138,13 +138,13 @@ void collectReachableRefs(XRef& xref, const ::Object &obj, Flattener::RefList &r
 		}
 		case objDict:
 		{
-			const Dict *dict = obj.getDict();
+            		Dict *dict = obj.getDict();
 			collectDictRefElems(xref, *dict, refList);
 			break;
 		}
 		case objStream:
 		{
-			const Dict *streamDict = obj.streamGetDict();
+            		Dict *streamDict = obj.streamGetDict();
 			collectDictRefElems(xref, *streamDict, refList);
 			break;
 		}
@@ -220,8 +220,7 @@ int Flattener::fillObjectList(IPdfWriter::ObjectList &objectList, int maxObjectC
 		XRef::fetch(num, gen, obj);
 		if(!isOk())
 		{
-			kernelPrintDbg(debug::DBG_ERR, ref<<" object fetching failed with code="
-					<<errCode);
+
 			xpdf::freeXpdfObject(obj);
 			throw MalformedFormatExeption("bad data stream");
 		}

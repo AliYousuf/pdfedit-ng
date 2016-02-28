@@ -98,40 +98,11 @@ int Delinearizator::fillObjectList(IPdfWriter::ObjectList &objectList, int maxOb
   	// free, to the objectList. Skips also Linearized dictionary
 	utilsPrintDbg(debug::DBG_DBG, "Collecting objects starting from "<<lastObj);
 	objectList.clear();
-	for(; lastObj < ::XRef::size; )
+    	for(; lastObj < maxObjectCount; )
   	{
 		// stop if we reach the maximum objects
 		if(maxObjectCount>0 && (int)objectList.size()>=maxObjectCount)
 			break;
-
-  		// gets object and generation number
-		int num=lastObj++;
-		::XRefEntry entry=::XRef::entries[num];
-  		if(entry.type==xrefEntryFree)
-  			continue;
-
-		// if entry is compressed (from object stream, gen is allways 0 but xpdf
-		// uses this number for object order in stream)
-		int gen=entry.gen;
-		if(entry.type==xrefEntryCompressed)
-			gen=0;
-  		
-  		// if entry is compressed (from object stream, gen is allways 0 but xpdf
-  		// uses this number for object order in stream)
-  		if(num==linearizedRef.num && gen==linearizedRef.gen)
-  			continue;
-  
-  		::Object * obj=XPdfObjectFactory::getInstance();
-  		::Ref ref={num, gen};
-  		XRef::fetch(num, gen, obj);
-  		if(!isOk())
-  		{
-			kernelPrintDbg(debug::DBG_ERR, ref<<" object fetching failed with code="
-					<<errCode);
-  			xpdf::freeXpdfObject(obj);
-  			throw MalformedFormatExeption("bad data stream");
-  		}
-  		objectList.push_back(IPdfWriter::ObjectElement(ref, obj));
   	}
 	utilsPrintDbg(debug::DBG_DBG, "Returned "<<objectList.size()<<" objects");
 	return objectList.size();

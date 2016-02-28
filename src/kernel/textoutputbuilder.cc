@@ -136,17 +136,16 @@ namespace {
 		//
 		// font
 		//
-		const string font_header (const PageSimpleFragment& f)
+        	const string font_header (const PageSimpleFragment& f)
 		{
 			ostringstream oss;
-			GfxFont* font = f._res->lookupFont (f._font_tag.c_str());
+            		GfxFont* font = f._res->lookupFont ( (char*)f._font_tag.c_str());
 
 			if (font)
 			{
 				string tmp;
 				ostringstream otmp;
 				tmp += make_att ("basename", font->getName() ? font->getName()->getCString() : string ("unknown"));
-				tmp += make_att ("origname", font->getOrigName() ? font->getOrigName()->getCString() : string ("unknown"));
 				tmp += make_att ("embeddedfontname", font->getEmbeddedFontName() ? font->getEmbeddedFontName()->getCString() : string ("unknown"));
 				tmp += make_att ("tag", font->getTag() ? font->getTag()->getCString() : string ("unknown"));
 				tmp += make_att ("serif", font->isSerif() ? string ("true") : string ("false"));

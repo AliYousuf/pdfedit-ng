@@ -57,15 +57,18 @@ static int parse_command_line(int *argc, char ***argv)
  *
  * @return 0 on success, -error otherwise.
  */
-static int init_xpdf_core(const struct pdfedit_core_dev_init *init)
+static int init_xpdf_core(struct pdfedit_core_dev_init *init)
 {
 	// initializes global parameters for xpdf code - TODO use
 	// configuration file - from parameters
-	const char * cfgFileName = (init)?init->cfgFileName:NULL;
-	GlobalParams::initGlobalParams(cfgFileName);
+    	char * cfgFileName = (init)?(char*)init->cfgFileName:NULL;
+
+    	if(!globalParams)
+        	globalParams = new GlobalParams(cfgFileName);
+
 	if(!globalParams)
 		return -ENOMEM;
-	const char * fontDir = (init)?init->fontDir:NULL;
+    	char * fontDir = (init)?(char*)init->fontDir:NULL;
 	globalParams->setupBaseFonts(fontDir);
 	return 0;
 }
@@ -81,7 +84,7 @@ static void init_stream_filterwriters()
 	utils::FilterStreamWriter::setDefaultStreamWriter(NullFilterStreamWriter::getInstance());
 }
 
-int pdfedit_core_dev_init(int *argc, char ***argv, const struct pdfedit_core_dev_init * init)
+int pdfedit_core_dev_init(int *argc, char ***argv, struct pdfedit_core_dev_init * init)
 {
 	if(initialized)
 		return 0;
@@ -105,7 +108,14 @@ bool pdfedit_core_dev_init_check()
 
 void pdfedit_core_dev_destroy()
 {
-	GlobalParams::destroyGlobalParams();
+    	if(!globalParams)
+    	{
+        	fprintf(stderr, "Trying to destroy uninitialized globalParams\n");
+        	return;
+     	}
+     	delete globalParams;
+     	globalParams = NULL;
+
 	initialized = false;
 	FilterStreamWriter::unregisterFilterStreamWriter(ZlibFilterStreamWriter::getInstance());
 }
